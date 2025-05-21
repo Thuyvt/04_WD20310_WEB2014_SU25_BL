@@ -9,5 +9,10 @@
         // Khai báo hàm
         public function __construct() {}
         public function __destruct() {}
+
+        public function displayProductInfor() {
+            echo "ID: " .$this->id. "<br>";
+            echo "Tên: " .$this->name. "<br>";
+        }
     }
 ?>
