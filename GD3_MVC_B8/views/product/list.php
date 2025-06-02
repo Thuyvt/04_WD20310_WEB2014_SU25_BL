@@ -22,19 +22,43 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>
-                    <a href="?act=product-update&id=2">Sửa</a>
-                    <a href="?act=product-delete&id=2">Xóa</a>
-                </td>
-            </tr>
+            <!-- C1: Chèn code HTML trong code php -->
+            <?php 
+                // foreach($danhSachProduct as $pro) {
+                //     // echo "$pro->id";
+                //     echo "<tr>";
+                //     echo "    <td>$pro->id</td>";
+                //     echo "    <td>$pro->name</td>";
+                //     echo "    <td>$pro->price</td>";
+                //     echo "    <td>$pro->category_id</td>";
+                //     echo "    <td>$pro->quantity</td>";
+                //     echo "    <td>$pro->image_src</td>";
+                //     echo "    <td>$pro->created_date</td>";
+                //     echo "    <td>";
+                //     echo "        <a href=" . "?act=product-update&id=$pro->id" . ">Sửa</a>";
+                //     echo "        <a href=" . "?act=product-delete&id=$pro->id" . ">Xóa</a>";
+                //     echo "    </td>";
+                //     echo "</tr>";
+                // }
+            ?>
+
+            <!-- C2: Chèn PHP vào HTML -->
+            <?php foreach($danhSachProduct as $pro) { ?>
+                <tr>
+                    <td><?php echo $pro->id ?></td>
+                    <td><?= $pro->name ?></td>
+                    <td><?= $pro->price ?></td>
+                    <td><?= $pro->category_id ?></td>
+                    <td><?= $pro->quantity ?></td>
+                    <td><?= $pro->image_src ?> </td>
+                    <td><?= $pro->created_date ?></td>
+                    <td>
+                        <a href="?act=product-update&id=<?= $pro->id ?>">Sửa</a>
+                        <a href="?act=product-delete&id=<?= $pro->id ?>" 
+                        onclick="return confirm('Bạn có muốn xóa không ?')">Xóa</a>
+                    </td>
+                </tr>
+            <?php } ?> 
         </tbody>
     </table>
 </body>

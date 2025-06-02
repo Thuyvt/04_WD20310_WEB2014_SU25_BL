@@ -49,5 +49,22 @@ class ProductQuery {
                 echo "Lỗi: " . $error->getMessage(). "<br>";
             }
         }
+
+        // Hàm xóa trong CSDL
+        public function delete($id) {
+            try {
+                 // 1. Khai báo sql
+                 $sql = "DELETE FROM product WHERE id = $id";
+
+                 // 2. Thực hiện sql
+                 $data = $this->pdo->exec($sql);
+                 // $data = 1 là thực hiện sql thành 
+                 // 3. return data ra controller
+                 return $data;
+
+            } catch(Exception $error) {
+                echo "Lỗi: " .$error->getMessage() ."<hr>";
+            }
+        }
     }
 ?>

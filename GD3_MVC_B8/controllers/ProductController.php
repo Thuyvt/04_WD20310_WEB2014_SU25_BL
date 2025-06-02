@@ -43,7 +43,15 @@
         public function delete($id) {
             if ($id !== "") {
                 // Hiển thị view tương ứng
-                echo "Xóa id: $id <hr>";
+                // echo "Xóa id: $id <hr>";
+                // Gọi hàm tương ứng trong productQuery, thực hiện xóa trong CSDL
+                $result = $this->productQuery->delete($id);
+                if ($result == 1) {
+                    // Chuyển trang về danh sách
+                    header("Location: ?act=product-list");
+                } else {
+                    echo "Xóa không thành công";
+                }
             } else {
                 echo "Lỗi: Không nhận được thông tin <hr>";
             }
