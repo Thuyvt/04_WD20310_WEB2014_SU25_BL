@@ -25,7 +25,10 @@ class ProductQuery {
             
             try {   
                 // 1. Khai báo sql
-                $sql = "SELECT * FROM `product`";
+                $sql = "SELECT pro.*, cat.name as category_name 
+                FROM product as pro 
+                JOIN category as cat 
+                ON pro.category_id = cat.id;";
 
                 // 2. Thực thi câu lệnh
                 $data = $this->pdo->query($sql)->fetchAll();
@@ -38,9 +41,10 @@ class ProductQuery {
                     $product->id = $value["id"];
                     $product->name= $value["name"];
                     $product->price = $value["price"];
-                    $product->quanity = $value["quantity"];
+                    $product->quantity = $value["quantity"];
                     $product->image_src = $value["image_src"];
                     $product->category_id = $value["category_id"];
+                    $product->category_name = $value["category_name"];
                     $product->created_date = $value["created_date"];
 
                     $danhSach[] = $product;
@@ -85,6 +89,52 @@ class ProductQuery {
                 return $data;
             } catch (Exception $error) {
                 echo "Lỗi: ". $error->getMessage();
+            }
+        }
+
+        // Hàm tìm thông tin object bằng id
+        public function find($id) {
+            try {
+                // 1. Khai báo sql
+                $sql = "SELECT * FROM product WHERE id = $id";
+                // 2. Thực thi sql
+                $data = $this->pdo->query($sql)->fetch();
+                // 3. Convert data -> object
+                if ($data != false) {
+                    $product = new Product();
+                    $product->id = $data["id"];
+                    $product->name= $data["name"];
+                    $product->price = $data["price"];
+                    $product->quantity = $data["quantity"];
+                    $product->image_src = $data["image_src"];
+                    $product->category_id = $data["category_id"];
+                    $product->created_date = $data["created_date"];
+                    // 4. Return object
+                    return $product;
+                } else {
+                    echo "Không tồn tại bản ghi trong CSDL, vui lòng thử lại";
+                }
+
+            } catch(Exception $error) {
+                echo "Lỗi:. " .$error->getMessage();
+            }
+        }
+
+        // Hàm xử lý logic cập nhật
+        public function update(Product $product) {
+            try {
+                // 1. Khai báo
+                $sql = "UPDATE `product` SET `name` = '$product->name', 
+                `price` = '$product->price', `quantity` = '$product->quantity',
+                `image_src` = '$product->image_src', 
+                `created_date` = '$product->created_date'
+                 WHERE `product`.`id` = $product->id;";
+                // 2. Thực hiện câu sql
+                $data = $this->pdo->exec($sql);
+                // 3. Return giá trị
+                return $data;
+            } catch(Exception $error) {
+                echo "Lỗi: " . $error->getMessage();
             }
         }
     }
