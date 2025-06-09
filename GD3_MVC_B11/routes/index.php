@@ -6,5 +6,5 @@ match ($action) {
     '/'         => (new HomeController)->index(),
     'student-list' => (new StudentController)->list(),
     // Chưa có hàm thì khai báo ''
-    'student-create' => '',
+    'student-create' => (new StudentController)->create(),
 };
